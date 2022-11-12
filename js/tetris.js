@@ -2,19 +2,19 @@
 //El static no se asocia a un objeto si no a una clase
 class Game { 
     // Square length in pixels
-    static SQUARE_LENGTH = screen.width > 420 ? 15 : 20; //la medida del cuadrado depende del tamaño de la pantalla
+    static SQUARE_LENGTH = screen.width > 420 ? 30 : 20; //la medida del cuadrado depende del tamaño de la pantalla
     //porejemplosi la pantalla es mayor a 420px va a ser de 30px o si no de 20
-    static COLUMNS = 12;
-    static ROWS = 25;
+    static COLUMNS = 10;
+    static ROWS = 15;
 // por medio de este codigo se detemina el ancho y alto del tablero de tetris , teniendo en cuenta el ancho de la pantalla y el numero de filas y columnas
     static CANVAS_WIDTH = this.SQUARE_LENGTH * this.COLUMNS;
     static CANVAS_HEIGHT = this.SQUARE_LENGTH * this.ROWS;
     //Color del fondo del tablero
-    static EMPTY_COLOR = "black";
+    static EMPTY_COLOR = "#F2E7D5";
     //Color de los bordes del tablero
-    static BORDER_COLOR = "green";
+    static BORDER_COLOR = "#160040";
     //Color a aplicar cuando se elimina una fila completa del tablero
-    static DELETED_ROW_COLOR = "purple";
+    static DELETED_ROW_COLOR = "#9A0680";
     // When a piece collapses with something at its bottom, how many time wait for putting another piece? (in ms)
     static TIMEOUT_LOCK_PUT_NEXT_PIECE = 300; // tiempo en que se demora en aparecer la otra ficha
     // Speed of falling piece (in ms)
@@ -24,23 +24,22 @@ class Game {
     // Score to add when a square dissapears (for each square)
     static PER_SQUARE_SCORE = 1; //puntaje asignado por cada cuadro que se elimmine
     static COLORS = [ // colores de las fichas
-        "#ffd300",
-        "#de38c8",
-        "#652ec7",
-        "#33135c",
-        "#13ca91",
-        "#ff9472",
-        "#35212a",
-        "#ff8b8b",
-        "#28cf75",
-        "#00a9fe",
-        "#04005e",
-        "#120052",
-        "#272822",
-        "#f92672",
-        "#66d9ef",
-        "#a6e22e",
-        "#fd971f",
+        "#557153",
+        "#7D8F69",
+        "#A9AF7E",
+        "#E6E5A3",
+        "#1A374D",
+        "#406882",
+        "#6998AB",
+        "#B1D0E0",
+        "#632626",
+        "#9D5353",
+        "#BF8B67",
+        "#DACC96",
+        "#1C0C5B",
+        "#3D2C8D",
+        "#916BBF",
+        "#C996CC",
     ];
 
 
