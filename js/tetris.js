@@ -85,22 +85,23 @@ class Game {
     }
 
     showWelcome() {
-        Swal.fire("Bienvenido", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
+        Swal.fire("¡Bienvenido!", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
 
 <br>
 <img src="/img/tetris.png">
 <style>
 img{
-    width: 400px;
-    margin: 15px auto;
+    width: 430px;
+    height:170px;
     border-radius:20px;
+    box-shadow: 5px 5px 5px 1px #82748f;
 }
 </style>
 <strong>Controles:</strong>
-<ul class="list-group">
-<li class="list-group-item"> <kbd>P</kbd><br>Pausar o reanudar </li>
-<li class="list-group-item"> <kbd>R</kbd><br>Rotar</li>
-<li class="list-group-item"> <kbd>Flechas de dirección</kbd><br>Mover figura hacia esa dirección</li>
+<ul class="list-group"><br>
+<li class="list-group-item"> <kbd>P</kbd><br><br>Pausar o reanudar </li><br>
+<li class="list-group-item"> <kbd>R</kbd><br><br>Rotar</li><br>
+<li class="list-group-item"> <kbd>Flechas de dirección</kbd><br><br>Mover figura hacia esa dirección</li>
 <li class="list-group-item"><strong>También puedes usar los botones si estás en móvil</strong></li>
 </ul>
 
