@@ -2,17 +2,17 @@
 //El static no se asocia a un objeto si no a una clase
 class Game { 
     // Square length in pixels
-    static SQUARE_LENGTH = screen.width > 420 ? 30 : 20; //la medida del cuadrado depende del tamaño de la pantalla
+    static SQUARE_LENGTH = screen.width > 420 ? 25 : 10; //la medida del cuadrado depende del tamaño de la pantalla
     //porejemplosi la pantalla es mayor a 420px va a ser de 30px o si no de 20
-    static COLUMNS = 10;
-    static ROWS = 15;
+    static COLUMNS = 12;
+    static ROWS = 25;
 // por medio de este codigo se detemina el ancho y alto del tablero de tetris , teniendo en cuenta el ancho de la pantalla y el numero de filas y columnas
     static CANVAS_WIDTH = this.SQUARE_LENGTH * this.COLUMNS;
     static CANVAS_HEIGHT = this.SQUARE_LENGTH * this.ROWS;
     //Color del fondo del tablero
-    static EMPTY_COLOR = "#F2E7D5";
+    static EMPTY_COLOR = "#ffffff";
     //Color de los bordes del tablero
-    static BORDER_COLOR = "#160040";
+    static BORDER_COLOR = "#b03396";
     //Color a aplicar cuando se elimina una fila completa del tablero
     static DELETED_ROW_COLOR = "#9A0680";
     // When a piece collapses with something at its bottom, how many time wait for putting another piece? (in ms)
@@ -671,12 +671,12 @@ img{
             cancelButtonColor: '#4A42F3',
             cancelButtonText: 'No',
             confirmButtonText: 'Sí'
-        });
+        });*/
         if (result.value) {
             this.resetGame();
         } else {
             this.resumeGame();
-        }*/
+        }
     }
 
 }
