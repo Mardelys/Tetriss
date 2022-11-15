@@ -85,7 +85,7 @@ class Game {
     }
 
     showWelcome() {
-        alert('Bienvenido')
+        alert('Bienvenido');
        }
 
        /* Swal.fire("¡Bienvenido!", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
