@@ -60,7 +60,7 @@ class Game {
         this.intervalId = null;
         this.init();
     }
-
+    //1 método
     init() {
         this.showWelcome();
         this.initDomElements();
@@ -69,7 +69,7 @@ class Game {
         this.draw();
         this.initControls();
     }
-
+    //2 método
     resetGame() {
         this.score = 0;
         this.sounds.success.currentTime = 0;
@@ -83,7 +83,7 @@ class Game {
         this.refreshScore();
         this.pauseGame();
     }
-
+    //3 método
     showWelcome() {
         alert("bienvenidos")
         /*Swal.fire("¡Bienvenido!", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
@@ -109,7 +109,7 @@ img{
 `);*/
     }
 
-
+    //4 método
     initControls() {
         document.addEventListener("keydown", (e) => {
             const { code } = e;
@@ -156,29 +156,29 @@ img{
             this.pauseOrResumeGame();
         }));
     }
-
+    //5 método
     attemptMoveRight() {
         if (this.figureCanMoveRight()) {
             this.globalX++;
         }
     }
-
+    //6 método
     attemptMoveLeft() {
         if (this.figureCanMoveLeft()) {
             this.globalX--;
         }
     }
-
+    //7 método
     attemptMoveDown() {
         if (this.figureCanMoveDown()) {
             this.globalY++;
         }
     }
-
+    //8 método
     attemptRotate() {
         this.rotateFigure();
     }
-
+    //9 método
     pauseOrResumeGame() {
         if (this.paused) {
             this.resumeGame();
@@ -190,14 +190,14 @@ img{
             this.$btnPause.hidden = true;
         }
     }
-
+    //10 método
     pauseGame() {
         this.sounds.background.pause();
         this.paused = true;
         this.canPlay = false;
         clearInterval(this.intervalId);
     }
-
+    //11 método
     resumeGame() {
         this.sounds.background.play();
         this.refreshScore();
@@ -206,7 +206,7 @@ img{
         this.intervalId = setInterval(this.mainLoop.bind(this), Game.PIECE_SPEED);
     }
 
-
+    //12 método
     moveFigurePointsToExistingPieces() {
         this.canPlay = false;
         for (const point of this.currentFigure.getPoints()) {
@@ -220,7 +220,7 @@ img{
         this.restartGlobalXAndY();
         this.canPlay = true;
     }
-
+    //13 método
     playerLoses() {
         // Check if there's something at Y 1. Maybe it is not fair for the player, but it works
         for (const point of this.existingPieces[1]) {
@@ -231,7 +231,7 @@ img{
         return false;
     }
 
-
+    //14 método
     getPointsToDelete = () => {
         const points = [];
         let y = 0;
@@ -245,7 +245,7 @@ img{
         }
         return points;
     }
-
+    //15 método
     changeDeletedRowColor(yCoordinates) {
         for (let y of yCoordinates) {
             for (const point of this.existingPieces[y]) {
@@ -254,13 +254,13 @@ img{
         }
     };
 
-
+    //16 método
     addScore(rows) {
         this.score += Game.PER_SQUARE_SCORE * Game.COLUMNS * rows.length;
         this.refreshScore();
     }
 
-
+    //17 método
     removeRowsFromExistingPieces(yCoordinates) {
         for (let y of yCoordinates) {
             for (const point of this.existingPieces[y]) {
@@ -270,7 +270,7 @@ img{
         }
     }
 
-
+    //18 método
     verifyAndDeleteFullRows() {
         // Here be dragons
         const yCoordinates = this.getPointsToDelete();
@@ -314,7 +314,7 @@ img{
             this.canPlay = true;
         }, Game.DELETE_ROW_ANIMATION);
     }
-
+    //19 método
     mainLoop() {
         if (!this.canPlay) {
             return;
@@ -356,7 +356,7 @@ img{
         this.syncExistingPiecesWithBoard();
     }
 
-
+    //20 método
     cleanGameBoardAndOverlapExistingPieces() {
         for (let y = 0; y < Game.ROWS; y++) {
             for (let x = 0; x < Game.COLUMNS; x++) {
@@ -371,7 +371,7 @@ img{
             }
         }
     }
-
+    //21 método
     overlapCurrentFigureOnGameBoard() {
         if (!this.currentFigure) return;
         for (const point of this.currentFigure.getPoints()) {
@@ -379,12 +379,12 @@ img{
         }
     }
 
-
+    //22 método
     syncExistingPiecesWithBoard() {
         this.cleanGameBoardAndOverlapExistingPieces();
         this.overlapCurrentFigureOnGameBoard();
     }
-
+    //23 método
     draw() {
         let x = 0, y = 0;
         for (const row of this.board) {
@@ -403,18 +403,18 @@ img{
             requestAnimationFrame(this.draw.bind(this));
         }, 17);
     }
-
+    //24 método
     refreshScore() {
         this.$score.textContent = `Score: ${this.score}`;
     }
-
+    //25 método
     initSounds() {
         this.sounds.background = Utils.loadSound("assets/New Donk City_ Daytime 8 Bit.mp3", true);
         this.sounds.success = Utils.loadSound("assets/success.wav");
         this.sounds.denied = Utils.loadSound("assets/denied.wav");
         this.sounds.tap = Utils.loadSound("assets/tap.wav");
     }
-
+    //26 método
     initDomElements() {
         this.$canvas = document.querySelector("#" + this.canvasId);
         this.$score = document.querySelector("#puntaje");
@@ -428,17 +428,17 @@ img{
         this.$canvas.setAttribute("height", Game.CANVAS_HEIGHT + "px");
         this.canvasContext = this.$canvas.getContext("2d");
     }
-
+    //27 método
     chooseRandomFigure() {
         this.currentFigure = this.getRandomFigure();
     }
-
+    //28 método
     restartGlobalXAndY() {
         this.globalX = Math.floor(Game.COLUMNS / 2) - 1;
         this.globalY = 0;
     }
 
-
+    //29 método
     getRandomFigure() {
         /*
         * Nombres de los tetrominós tomados de: https://www.joe.co.uk/gaming/tetris-block-names-221127
@@ -536,7 +536,7 @@ img{
                 ]);
         }
     }
-
+    //30 método
     initBoardAndExistingPieces() {
         this.board = [];
         this.existingPieces = [];
@@ -561,6 +561,8 @@ img{
      * @param point An object that has x and y properties; the coordinates shouldn't be global, but relative to the point
      * @returns {boolean}
      */
+
+    //31 método
     relativePointOutOfLimits(point) {
         const absoluteX = point.x + this.globalX;
         const absoluteY = point.y + this.globalY;
@@ -572,11 +574,14 @@ img{
      * @param absoluteY
      * @returns {boolean}
      */
+
+    //32 método
     absolutePointOutOfLimits(absoluteX, absoluteY) {
         return absoluteX < 0 || absoluteX > Game.COLUMNS - 1 || absoluteY < 0 || absoluteY > Game.ROWS - 1;
     }
 
     // It returns true even if the point is not valid (for example if it is out of limit, because it is not the function's responsibility)
+    //33 método
     isEmptyPoint(x, y) {
         if (!this.existingPieces[y]) return true;
         if (!this.existingPieces[y][x]) return true;
@@ -592,6 +597,7 @@ img{
      * @param point the point to check, with relative coordinates
      * @param points an array of points that conforms a figure
      */
+    //34 método
     isValidPoint(point, points) {
         const emptyPoint = this.isEmptyPoint(this.globalX + point.x, this.globalY + point.y);
         const hasSameCoordinateOfFigurePoint = points.findIndex(p => {
@@ -604,7 +610,7 @@ img{
             return false;
         }
     }
-
+    //35 método
     figureCanMoveRight() {
         if (!this.currentFigure) return false;
         for (const point of this.currentFigure.getPoints()) {
@@ -615,7 +621,7 @@ img{
         }
         return true;
     }
-
+    //36 método
     figureCanMoveLeft() {
         if (!this.currentFigure) return false;
         for (const point of this.currentFigure.getPoints()) {
@@ -626,7 +632,7 @@ img{
         }
         return true;
     }
-
+    //37 método
     figureCanMoveDown() {
         if (!this.currentFigure) return false;
         for (const point of this.currentFigure.getPoints()) {
@@ -637,7 +643,7 @@ img{
         }
         return true;
     }
-
+    //38 método
     figureCanRotate() {
         const newPointsAfterRotate = this.currentFigure.getNextRotation();
         for (const rotatedPoint of newPointsAfterRotate) {
@@ -648,7 +654,7 @@ img{
         return true;
     }
 
-
+    //39 método
     rotateFigure() {
         if (!this.figureCanRotate()) {
             this.sounds.denied.currentTime = 0;
@@ -658,7 +664,7 @@ img{
         this.currentFigure.points = this.currentFigure.getNextRotation();
         this.currentFigure.incrementRotationIndex();
     }
-
+    //40 método
     async askUserConfirmResetGame() {
         this.pauseGame();
         /*const result = await Swal.fire({
