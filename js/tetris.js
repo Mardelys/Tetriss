@@ -85,7 +85,8 @@ class Game {
     }
 
     showWelcome() {
-        Swal.fire("¡Bienvenido!", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
+        alert("bienvenidos")
+        /*Swal.fire("¡Bienvenido!", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
 
 <br>
 <img src="/img/tetris.png">
@@ -105,7 +106,7 @@ img{
 <li class="list-group-item"><strong>También puedes usar los botones si estás en móvil</strong></li>
 </ul>
 
-`);
+`);*/
     }
 
 
@@ -341,7 +342,7 @@ img{
                 this.sounds.tap.play();
                 this.moveFigurePointsToExistingPieces();
                 if (this.playerLoses()) {
-                    Swal.fire("Juego terminado", "Inténtalo de nuevo");
+                    //Swal.fire("Juego terminado", "Inténtalo de nuevo");
                     this.sounds.background.pause();
                     this.canPlay = false;
                     this.resetGame();
@@ -660,7 +661,7 @@ img{
 
     async askUserConfirmResetGame() {
         this.pauseGame();
-        const result = await Swal.fire({
+        /*const result = await Swal.fire({
             title: 'Reiniciar',
             text: "¿Quieres reiniciar el juego?",
             icon: 'question',
@@ -669,7 +670,7 @@ img{
             cancelButtonColor: '#4A42F3',
             cancelButtonText: 'No',
             confirmButtonText: 'Sí'
-        });
+        });*/
         if (result.value) {
             this.resetGame();
         } else {
