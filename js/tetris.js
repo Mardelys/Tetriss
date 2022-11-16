@@ -85,10 +85,21 @@ class Game {
     }
 
     showWelcome() {
-        alert('Bienvenido');
-       }
+        Swal.fire({
+            title: '¡Bienvenido!',
+            text: 'Disfruta de este juego tan entretenido, juega un clásico que nunca pasa de moda. Utiliza estos atájos: "R" Rotar la pieza, "P" Pausar o reanudar y las "Flechas de Dirección"',
+            imageUrl: '/img/tetris.png',
+            imageWidth: 400,
+            imageHeight: 200,
+            color: '#000',
+            background: 'linear-gradient(125deg, rgba(96,255,255,1) 0%, rgba(118,118,254,1) 35%, rgba(235,119,255,1) 100%) ',
+            imageAlt: 'Custom image',
+            confirmButtonColor: '#4C0070',
+            confirmButtonText: '¡Juega!',
+        })
+    }
 
-       /* Swal.fire("¡Bienvenido!", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
+    /* Swal.fire("¡Bienvenido!", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
 
 <br>
 <img src="/img/tetris.png">
@@ -343,7 +354,7 @@ img{
                 this.sounds.tap.play();
                 this.moveFigurePointsToExistingPieces();
                 if (this.playerLoses()) {
-                    //Swal.fire("Juego terminado", "Inténtalo de nuevo");
+                    Swal.fire("Juego terminado", "Inténtalo de nuevo");
                     this.sounds.background.pause();
                     this.canPlay = false;
                     this.resetGame();
@@ -662,16 +673,18 @@ img{
 
     async askUserConfirmResetGame() {
         this.pauseGame();
-        /*const result = await Swal.fire({
+        const result = await Swal.fire({
             title: 'Reiniciar',
             text: "¿Quieres reiniciar el juego?",
             icon: 'question',
+            color: '#4C0070',
+            background: ' url(/img/fondo-alert.jpg) ',
             showCancelButton: true,
-            confirmButtonColor: '#fdbf9c',
-            cancelButtonColor: '#4A42F3',
+            confirmButtonColor: '#3cbd30',
+            cancelButtonColor: '#d82e2e',
             cancelButtonText: 'No',
             confirmButtonText: 'Sí'
-        });*/
+        });
         if (result.value) {
             this.resetGame();
         } else {

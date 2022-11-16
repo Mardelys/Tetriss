@@ -6,17 +6,20 @@
 
 body{
     background: linear-gradient(0deg, rgba(22,0,64,1) 0%, rgba(76,0,112,1) 52%, rgba(154,6,128,1) 100%);
-    background-repeat: no-repeat;
+    height: 100%;
     color: #fff;
-    height: 100vh;
 }
+main{
+        
+}
+
 ul{
     list-style: none;
 }
 kbd{
     padding: 10px 30px;
     color: #fff;
-    background-color:#4C0070;;
+    background-color:#4C0070;
     border-radius: 20px;
     box-shadow: 2px 2px 5px 1px #82748f;
     font-size: 20px;
@@ -54,7 +57,7 @@ h2{
     margin-top: 30px;
     font-family: 'Risque', sans-serif;
 }
-div .col-12{
+.col-12{
     display: grid;
     grid-template-columns: 30% 10%;
     margin: auto;
