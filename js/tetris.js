@@ -3,7 +3,7 @@
 class Game { 
     // Square length in pixels
     static SQUARE_LENGTH = screen.width > 420 ? 25 : 10; //la medida del cuadrado depende del tamaño de la pantalla
-    //porejemplosi la pantalla es mayor a 420px va a ser de 30px o si no de 20
+    //porejemplosi la pantalla es mayor a 420px va a ser de 25px o si no de 10
     static COLUMNS = 12;
     static ROWS = 25;
 // por medio de este codigo se detemina el ancho y alto del tablero de tetris , teniendo en cuenta el ancho de la pantalla y el numero de filas y columnas
@@ -47,7 +47,7 @@ class Game {
 //min 14:46
     constructor(canvasId) {
         //variables
-        this.canvasId = canvasId;
+        this.canvasId = canvasId; 
         this.timeoutFlag = false;
         this.board = [];
         this.existingPieces = [];
@@ -113,7 +113,7 @@ img{
     initControls() {
         document.addEventListener("keydown", (e) => {
             const { code } = e;
-            if (!this.canPlay && code !== "KeyP") {
+            if (!this.canPlay && code !== "KeyP") { 
                 return;
             }
             switch (code) {
