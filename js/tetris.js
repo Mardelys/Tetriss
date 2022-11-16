@@ -354,7 +354,17 @@ img{
                 this.sounds.tap.play();
                 this.moveFigurePointsToExistingPieces();
                 if (this.playerLoses()) {
-                    Swal.fire("Juego terminado", "Inténtalo de nuevo");
+                    Swal.fire({
+                        title: '¡Fin del Juego!',
+                        text:'¿Lo intentas nuevamente?',
+                        imageUrl: '/img/game-over.gif',
+                        imageWidth: 450,
+                        imageHeight: 200,
+                        color: '#000',
+                        imageAlt: 'Custom image',
+                        confirmButtonColor: '#4C0070',
+                        confirmButtonText: '¡Si!',
+                    })
                     this.sounds.background.pause();
                     this.canPlay = false;
                     this.resetGame();
