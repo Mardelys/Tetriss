@@ -6,7 +6,7 @@ class Game {
     //porejemplosi la pantalla es mayor a 420px va a ser de 25px o si no de 10
     static COLUMNS = 12;
     static ROWS = 25;
-// por medio de este codigo se detemina el ancho y alto del tablero de tetris , teniendo en cuenta el ancho de la pantalla y el numero de filas y columnas
+    // por medio de este codigo se detemina el ancho y alto del tablero de tetris , teniendo en cuenta el ancho de la pantalla y el numero de filas y columnas
     static CANVAS_WIDTH = this.SQUARE_LENGTH * this.COLUMNS;
     static CANVAS_HEIGHT = this.SQUARE_LENGTH * this.ROWS;
     //Color del fondo del tablero
@@ -15,31 +15,24 @@ class Game {
     static BORDER_COLOR = "#b03396";
     //Color a aplicar cuando se elimina una fila completa del tablero
     static DELETED_ROW_COLOR = "#9A0680";
-    // When a piece collapses with something at its bottom, how many time wait for putting another piece? (in ms)
-    static TIMEOUT_LOCK_PUT_NEXT_PIECE = 300; // tiempo en que se demora en aparecer la otra ficha
-    // Speed of falling piece (in ms)
-    static PIECE_SPEED = 300;// velocidad en que baja la ficha entre menor sea el numero , bajara mas rapido
-    // Animation time when a row is being deleted
-    static DELETE_ROW_ANIMATION = 300; // tiempo en el que se demora una fila en desaparecer cuando  se complete
-    // Score to add when a square dissapears (for each square)
-    static PER_SQUARE_SCORE = 1; //puntaje asignado por cada cuadro que se elimmine
-    static COLORS = [ // colores de las fichas
-        "#557153",
-        "#7D8F69",
-        "#A9AF7E",
-        "#E6E5A3",
-        "#1A374D",
-        "#406882",
-        "#6998AB",
-        "#B1D0E0",
-        "#632626",
-        "#9D5353",
-        "#BF8B67",
-        "#DACC96",
-        "#1C0C5B",
-        "#3D2C8D",
-        "#916BBF",
-        "#C996CC",
+    // Tiempo en que se demora en aparecer la otra ficha establecido en microsegundos
+    static TIMEOUT_LOCK_PUT_NEXT_PIECE = 300; 
+    // Velocidad en que baja la ficha entre menor sea el numero , bajara mas rapido.
+    static PIECE_SPEED = 300;// 
+    // Tiempo en el que se demora una fila en desaparecer cuando  se complete.
+    static DELETE_ROW_ANIMATION = 300; 
+    // Puntaje asignado por cada cuadro que se elimmine
+    static PER_SQUARE_SCORE = 1; 
+    // Colores de las fichas
+    static COLORS = [ 
+        "#D35400",
+        "#F1C40F",
+        "#27AE60",
+        "#16A085",
+        "#2980B9",
+        "#7D3C98",
+        "#E74C3C",
+        "#F4D03F",
     ];
 
 
@@ -60,7 +53,8 @@ class Game {
         this.intervalId = null;
         this.init();
     }
-    //1 método
+    //1 método 
+    /*Este método posee en su interior 6 métodos a ejecutar facilitando en primer medida un saludo de bienvenida, inicializar los elementos del DOM(Muestra los botones del juego), reproducir el sonido del juego, resetearlo si se quiere, permitir dibujar los tetriminos y el tablero del juego, permite el uso de los controles del juego como lo son las flechas y otros botones como pausa o rotar.*/
     init() {
         this.showWelcome();
         this.initDomElements();
@@ -70,6 +64,11 @@ class Game {
         this.initControls();
     }
     //2 método
+    /*Posee 7 métodos en su interior junto con 3 variables con dato de tipo numérico.
+    En este método se asigna un valor de 0 al puntaje.
+    Se llama al valor de sound decretado en el constructor para que el sonido se ejecute al completar una línea o pausarlo si se desea y también para ejecutar el sonido de fondo del juego en general y pausarlo si así se desea.
+    Así mismo empiezan a aparecer las fichas en el tablero, elegir una figura aleatoria, restablece la posición inicial de las piezas en X y Y, limpia el tablero de las piezas que estaban con anterioridad, refresca el puntaje y se deja el juego en pausa para volver a iniciar.
+    */
     resetGame() {
         this.score = 0;
         this.sounds.success.currentTime = 0;
@@ -84,32 +83,31 @@ class Game {
         this.pauseGame();
     }
     //3 método
+    /*En este método se muestra una alerta de bienvenida con las instrucciones del juego */
     showWelcome() {
-        alert("bienvenidos")
-        /*Swal.fire("¡Bienvenido!", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
-
-<br>
-<img src="/img/tetris.png">
-<style>
-img{
-    width: 430px;
-    height:170px;
-    border-radius:20px;
-    box-shadow: 5px 5px 5px 1px #82748f;
-}
-</style>
-<strong>Controles:</strong>
-<ul class="list-group"><br>
-<li class="list-group-item"> <kbd>P</kbd><br><br>Pausar o reanudar </li><br>
-<li class="list-group-item"> <kbd>R</kbd><br><br>Rotar</li><br>
-<li class="list-group-item"> <kbd>Flechas de dirección</kbd><br><br>Mover figura hacia esa dirección</li>
-<li class="list-group-item"><strong>También puedes usar los botones si estás en móvil</strong></li>
-</ul>
-
-`);*/
+        Swal.fire({
+            title: '¡Bienvenido!',
+            text: 'Disfruta de este juego tan entretenido, juega un clásico que nunca pasa de moda. Utiliza estos atájos: "R" Rotar la pieza, "P" Pausar o reanudar y las "Flechas de Dirección"',
+            imageUrl: '/img/tetris.png',
+            imageWidth: 400,
+            imageHeight: 200,
+            color: '#000',
+            background: 'linear-gradient(125deg, rgba(96,255,255,1) 0%, rgba(118,118,254,1) 35%, rgba(235,119,255,1) 100%) ',
+            imageAlt: 'Custom image',
+            confirmButtonColor: '#4C0070',
+            confirmButtonText: '¡Juega!',
+        })
     }
 
-    //4 método
+    //4 Método
+    /*Permite añadirle un addEventListener de tipo keydown a los botones que se van a utilizar en el juego mediante el teclado, utilizando un arrow function en donde se utiliza una condicional de if junto con 5 switch cases.
+
+    Esta condición dice que la variable decretada en el constructor con el nombre de canPlay cambia su valor a true y que se llame al parámetro code que hace referencia a las direcciones que puede seguir la tecla.
+
+    De tal manera, indica que: Si estoy jugando y presiono la tecla a la derecha no es igual a pausar, en cambio solicita retornar lo señalado dentro del switch case respectivo por ejemplo attemptMoveRight. Este método tiene los mismos efectos utilizando las demás teclas al presionarlas. Al final se solicita ejecutar el método de syncExistingPiecesWithBoard explicado más abajo (Método 22)
+
+    Por otra parte, también se añade un addEventListener de tipo “click” el cual va a ejecutarse al clickear sobre los botones creados en pantalla mediante el HTML. De tal manera, aplica dicho evento sobre el botón identificado en el HTML con el Id respectivo, siendo llamado mediante una variable decretada en el JS dentro del método initDomElements, en donde se llama dicho botón mediante el document.querySelector. Ahora bien al darle click solicita ejecutar el método attemptMoveDown, attemptMoveRight entre otros según corresponda. Si se trata del botón de pausa o resume, solicita que se ejecute el mismo método alusivo a pauseOrResumeGame.*/
+
     initControls() {
         document.addEventListener("keydown", (e) => {
             const { code } = e;
@@ -157,28 +155,38 @@ img{
         }));
     }
     //5 método
+    /*Inicialmente se decreta un método en el cual se aplica una condicional de if. En dicha condicional se llama otro método llamado figureCanMoveRight y se señala que si se cumple con lo decretado dentro de dicho método, se genere un incremento en 1 a la variable decretada en el constructor llamada globalX que inicialmente tenía valor de 0. Es entonces que la figura se moverá una casilla a la derecha.*/
+
     attemptMoveRight() {
         if (this.figureCanMoveRight()) {
             this.globalX++;
         }
     }
     //6 método
+    /*nicialmente se decreta un método en el cual se aplica una condicional de if. En dicha condicional se llama otro método llamado figureCanMoveLeft y se señala que si se cumple con lo decretado dentro de dicho método, se genere un decremento en 1 a la variable decretada en el constructor llamada globalX que inicialmente tenía valor de 0. Es entonces que la figura se moverá una casilla a la izquierda.*/
+
     attemptMoveLeft() {
         if (this.figureCanMoveLeft()) {
             this.globalX--;
         }
     }
     //7 método
+    /*Inicialmente se decreta un método en el cual se aplica una condicional de if. En dicha condicional se llama otro método llamado figureCanMoveDown y se señala que si se cumple con lo decretado dentro de dicho método, se genere un incremento en 1 a la variable declarada en el constructor llamada globalY que inicialmente tenía valor de 0. Es entonces que la figura se moverá una casilla hacia abajo.*/
+
     attemptMoveDown() {
         if (this.figureCanMoveDown()) {
             this.globalY++;
         }
     }
     //8 método
+    /*Se decreta un método el cual solicita ejecutar el método de rotateFigure el cual será explicado más abajo (Método 39)*/
     attemptRotate() {
         this.rotateFigure();
     }
     //9 método
+    /*Se declara un método con un condicional de if junto con un else. Se dice que si el juego está corriendo, el botón de iniciar se esconde y el de pausar se muestra. De lo contrario, si el juego está pausado el botón de iniciar se muestra y el de pausa se oculta. 
+    Nota: hidden = false indica que no se esconda el elemento y el hidden = true indica que si se esconda el elemento.
+    */
     pauseOrResumeGame() {
         if (this.paused) {
             this.resumeGame();
@@ -191,6 +199,8 @@ img{
         }
     }
     //10 método
+    /*Declara un método donde se llaman 3 variables del constructor siendo que: el sonido del juego en sí se pausa, el juego también se pausa es decir se mantiene el valor de true y también se mantiene el valor de false en la variable del canPlay, para finalizar crea una función llamada clearInterval la cual llama a intervalId decretada en el constructor como parámetro. Este intervalId permite que la pieza vaya bajando pero en este caso como el juego se pausa el clearInterval limpia el intervalo para no permitir seguir bajando la pieza*/
+
     pauseGame() {
         this.sounds.background.pause();
         this.paused = true;
@@ -198,6 +208,8 @@ img{
         clearInterval(this.intervalId);
     }
     //11 método
+    /*Este método declara volver a retomar el sonido, se llama el método refreshScore el cual permite seguir mostrando el puntaje que se ha acumulado durante el juego y permitir que se sigan sumando más puntos durante el progreso del juego; A las variables declaradas en el constructor se les indica que a la pausa se le cambia el valor de true a false es decir el juego deja de estar pausado y el canPlay cambia su valor de false a true para que el juego tenga continuidad. Para finalizar la variable declarada en el constructor llamada intervalidId permite que el intervalo de tiempo en términos de velocidad (uno de los static declarados al principio con el nombre de PIECE_SPEED)en la que baja la ficha se mantenga constante*/
+
     resumeGame() {
         this.sounds.background.play();
         this.refreshScore();
@@ -342,7 +354,17 @@ img{
                 this.sounds.tap.play();
                 this.moveFigurePointsToExistingPieces();
                 if (this.playerLoses()) {
-                    //Swal.fire("Juego terminado", "Inténtalo de nuevo");
+                    Swal.fire({
+                        title: '¡Fin del Juego!',
+                        text:'¿Lo intentas nuevamente?',
+                        imageUrl: '/img/game-over.gif',
+                        imageWidth: 450,
+                        imageHeight: 200,
+                        color: '#000',
+                        imageAlt: 'Custom image',
+                        confirmButtonColor: '#4C0070',
+                        confirmButtonText: '¡Si!',
+                    })
                     this.sounds.background.pause();
                     this.canPlay = false;
                     this.resetGame();
@@ -667,16 +689,18 @@ img{
     //40 método
     async askUserConfirmResetGame() {
         this.pauseGame();
-        /*const result = await Swal.fire({
+        const result = await Swal.fire({
             title: 'Reiniciar',
             text: "¿Quieres reiniciar el juego?",
             icon: 'question',
+            color: '#4C0070',
+            background: ' url(/img/fondo-alert.jpg) ',
             showCancelButton: true,
-            confirmButtonColor: '#fdbf9c',
-            cancelButtonColor: '#4A42F3',
+            confirmButtonColor: '#3cbd30',
+            cancelButtonColor: '#d82e2e',
             cancelButtonText: 'No',
             confirmButtonText: 'Sí'
-        });*/
+        });
         if (result.value) {
             this.resetGame();
         } else {
