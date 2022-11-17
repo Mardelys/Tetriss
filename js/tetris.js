@@ -2,7 +2,7 @@
 //El static no se asocia a un objeto si no a una clase
 class Game { 
     // Square length in pixels
-    static SQUARE_LENGTH = screen.width > 420 ? 25 : 10; //la medida del cuadrado depende del tamaño de la pantalla
+    static SQUARE_LENGTH = screen.width > 420 ? 25 : 8; //la medida del cuadrado depende del tamaño de la pantalla
     //porejemplosi la pantalla es mayor a 420px va a ser de 25px o si no de 10
     static COLUMNS = 12;
     static ROWS = 25;
