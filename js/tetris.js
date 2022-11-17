@@ -230,7 +230,7 @@ class Game {
                 color: point.color,
             }
         }
-        this.restartGlobalXAndY();
+        this.restartGlobalXAndY();// Este método dice que cuando la ficha toque el punto final del tablero o toque otra ficha, sale 
         this.canPlay = true;
     }
     //13 método
@@ -272,7 +272,7 @@ class Game {
     };
 
     //16 método
-    //Operador aritmético que al valor del score le suma 1 por fila con y se actualiza el puntaje.
+    //Operador aritmético que al valor del score le suma 1 por fila y se actualiza el puntaje.
 
     addScore(rows) {
         this.score += Game.PER_SQUARE_SCORE * Game.COLUMNS * rows.length;
@@ -285,7 +285,7 @@ class Game {
         for (let y of yCoordinates) {
             for (const point of this.existingPieces[y]) {
                 point.color = Game.EMPTY_COLOR;
-                point.taken = false;
+                point.taken = false; // el false es para que cuando se eliminen las filas 
             }
         }
     }
@@ -294,6 +294,7 @@ class Game {
     //REVISAR Se agrega la animacion de cuando se elimina la fila, el sonido que se reproduce al eliminarse la fila, el cambio de color, el canplay actua de manera .
     verifyAndDeleteFullRows() {
         // Here be dragons
+
         const yCoordinates = this.getPointsToDelete();
         if (yCoordinates.length <= 0) return;
         this.addScore(yCoordinates);
@@ -301,6 +302,7 @@ class Game {
         this.sounds.success.play();
         this.changeDeletedRowColor(yCoordinates);
         this.canPlay = false;
+
         setTimeout(() => {
             this.sounds.success.pause();
             this.removeRowsFromExistingPieces(yCoordinates);
@@ -540,7 +542,7 @@ class Game {
                 ]);
             case 5:
                 /*
-               La Z (Cleveland Z)
+                La Z (Cleveland Z)
                **
                 **
                */
@@ -552,7 +554,7 @@ class Game {
             case 6:
 
                 /*
-               La otra Z (Rhode island Z)
+                La otra Z (Rhode island Z)
                 **
                **
                */
@@ -578,7 +580,7 @@ class Game {
         }
     }
     //30 método
-    //Limpia el tablero reiniciando el tablero y las piezas existentes, para que las piezas quedan desplazarse hace barrido en y y x para asegurarse de que los espacios estén disponibles. verifica que el tablero está limpio  estos for permiten mover la ficha.
+    //Se limpia constantemete el tablero para que las piezas puedan desplazarse, verifica los espacios existente en el eje y y x, si no hay espacios disponibles el juego se acába, es decir limita el tablero
     initBoardAndExistingPieces() {
         this.board = [];
         this.existingPieces = [];
