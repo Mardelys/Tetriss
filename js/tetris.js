@@ -219,6 +219,7 @@ class Game {
     }
 
     //12 método
+    //Este metodo mantiene una posicion fija de la ficha al bajar tanto en y como en x, tiene el cuenta la posicion global del tablero. De igual manera, la ficha al tocar el fondo mantiene el color que traía. Se llama al metodo restartGlobarXandY la cual indica que cuando la ficha toca el punto límite sale la nueva ficha.
     moveFigurePointsToExistingPieces() {
         this.canPlay = false;
         for (const point of this.currentFigure.getPoints()) {
@@ -233,6 +234,7 @@ class Game {
         this.canPlay = true;
     }
     //13 método
+    //En esta función se define un bucle de tipo for, en donde cada vez que las piezas existentes en el tablero alcanzan la altura de la penúltima fila (posicion y1) el jugador va a perder y el juego se va a reiniciar gracias al return que especifica finalizar la función.
     playerLoses() {
         // Check if there's something at Y 1. Maybe it is not fair for the player, but it works
         for (const point of this.existingPieces[1]) {
@@ -244,6 +246,8 @@ class Game {
     }
 
     //14 método
+    //Se crea una lista vacia con el nombre points y una variable let “y”en cero el cual es el contador. Se ejecuta un bucle for en el cual se evalúa que si la fila está llena, los puntos de la variable let en cero se van a aumentar en 1 cuya sentencia será retornar los puntos. El every lo que hace es verificar si se está cumpliendo una condición o no. El push envia los puntos a la lista vacía y va sumando de a 1 punto por cada casilla.
+
     getPointsToDelete = () => {
         const points = [];
         let y = 0;
@@ -258,6 +262,7 @@ class Game {
         return points;
     }
     //15 método
+    //En este método llama al constructor existingPieces en las coordenadas en “y” permite que al eliminar la fila dicha fila adquiera un nuevo color que fue determinado en el static de DELETED_ROW_COLOR 
     changeDeletedRowColor(yCoordinates) {
         for (let y of yCoordinates) {
             for (const point of this.existingPieces[y]) {
@@ -267,12 +272,15 @@ class Game {
     };
 
     //16 método
+    //Operador aritmético que al valor del score le suma 1 por fila con y se actualiza el puntaje.
+
     addScore(rows) {
         this.score += Game.PER_SQUARE_SCORE * Game.COLUMNS * rows.length;
         this.refreshScore();
     }
 
     //17 método
+    //Se elimina la fila del todo y vuelve el color por defecto del tablero, y permite desplazar la siguiente fila del tetris,  si se pone true no quita la fila y no permite bajar el juego aunque se elimine en términos de coloración la fila eliminada.
     removeRowsFromExistingPieces(yCoordinates) {
         for (let y of yCoordinates) {
             for (const point of this.existingPieces[y]) {
@@ -283,6 +291,7 @@ class Game {
     }
 
     //18 método
+    //REVISAR Se agrega la animacion de cuando se elimina la fila, el sonido que se reproduce al eliminarse la fila, el cambio de color, el canplay actua de manera .
     verifyAndDeleteFullRows() {
         // Here be dragons
         const yCoordinates = this.getPointsToDelete();
@@ -327,6 +336,7 @@ class Game {
         }, Game.DELETE_ROW_ANIMATION);
     }
     //19 método
+    //Método que se repite constantemente en el juego para revisar si la ficha se puede mover o no. Si la ficha tiene límite de contacto no puede seguir bajando, si ya no se puede mover ejecuta el sonido del tap. También muestra el alert si pierde, el sonido se pausa, no se puede jugar más y se resetea y se sincronizan las piezas. El  Game.time out, es el tiempo en el que se demora en aparecer la otra ficha. y el sync lo usa para q se estén sincronizando las fichas continuamente con el tablero
     mainLoop() {
         if (!this.canPlay) {
             return;
@@ -379,6 +389,7 @@ class Game {
     }
 
     //20 método
+    //Usado para limpiar el tablero, al momento en el que se pierde el color del tablero retorna a su color inicial
     cleanGameBoardAndOverlapExistingPieces() {
         for (let y = 0; y < Game.ROWS; y++) {
             for (let x = 0; x < Game.COLUMNS; x++) {
@@ -394,6 +405,7 @@ class Game {
         }
     }
     //21 método
+    //
     overlapCurrentFigureOnGameBoard() {
         if (!this.currentFigure) return;
         for (const point of this.currentFigure.getPoints()) {
@@ -407,6 +419,7 @@ class Game {
         this.overlapCurrentFigureOnGameBoard();
     }
     //23 método
+    //Se dibuja el tablero y lo actualiza cada 17 milisegundos. El requestanimation frametiene como funcion repintar el cuadro cada ciclo
     draw() {
         let x = 0, y = 0;
         for (const row of this.board) {
@@ -426,10 +439,12 @@ class Game {
         }, 17);
     }
     //24 método
+    //Se llama un nodo que se va actualizando a medida que se van agregando mas puntos.
     refreshScore() {
         this.$score.textContent = `Score: ${this.score}`;
     }
     //25 método
+    //Define 4 variables de los 4 sonidos que se van a utilizar en el tetris
     initSounds() {
         this.sounds.background = Utils.loadSound("assets/New Donk City_ Daytime 8 Bit.mp3", true);
         this.sounds.success = Utils.loadSound("assets/success.wav");
@@ -437,6 +452,7 @@ class Game {
         this.sounds.tap = Utils.loadSound("assets/tap.wav");
     }
     //26 método
+    //Mediante este método se decretan las variables que se llaman mediante el document.querySelector a los nodos identificados con los ID de los botones a utilizar en el juego. Así mismo se decretaron atributos para el ancho y largo del canvas en la medida pixeles y se declaró que el contexto de la dimensión del canvas sea en segunda dimensión.
     initDomElements() {
         this.$canvas = document.querySelector("#" + this.canvasId);
         this.$score = document.querySelector("#puntaje");
@@ -451,16 +467,19 @@ class Game {
         this.canvasContext = this.$canvas.getContext("2d");
     }
     //27 método
+    //En este método se llama a la variable decretada en el constructor como currentFigure y pasa de null a cambiarle su valor al método getRandomFigure el cual crea las figuras de tetriminos.
     chooseRandomFigure() {
         this.currentFigure = this.getRandomFigure();
     }
     //28 método
+    //Ajusta la posición en la que van a salir las fichas en x y y dividiendo las columnas en 2 para encontrar el punto medio de salida.
     restartGlobalXAndY() {
         this.globalX = Math.floor(Game.COLUMNS / 2) - 1;
         this.globalY = 0;
     }
 
     //29 método
+    //Crea las figuras indicando su posicionameinto en x y y y sus posibles rotaciones
     getRandomFigure() {
         /*
         * Nombres de los tetrominós tomados de: https://www.joe.co.uk/gaming/tetris-block-names-221127
@@ -559,6 +578,7 @@ class Game {
         }
     }
     //30 método
+    //Limpia el tablero reiniciando el tablero y las piezas existentes, para que las piezas quedan desplazarse hace barrido en y y x para asegurarse de que los espacios estén disponibles. verifica que el tablero está limpio  estos for permiten mover la ficha.
     initBoardAndExistingPieces() {
         this.board = [];
         this.existingPieces = [];
@@ -585,6 +605,8 @@ class Game {
      */
 
     //31 método
+    //Se establece una posición relativa para las piezas. Detecta las colisiones, determina el máximo tope que puedan tener las fichas en x y en y. 
+
     relativePointOutOfLimits(point) {
         const absoluteX = point.x + this.globalX;
         const absoluteY = point.y + this.globalY;
@@ -598,12 +620,14 @@ class Game {
      */
 
     //32 método
+    //Establece una operaciónmatemática para señalar el límite de las piezas para moverse dentro del canva
     absolutePointOutOfLimits(absoluteX, absoluteY) {
         return absoluteX < 0 || absoluteX > Game.COLUMNS - 1 || absoluteY < 0 || absoluteY > Game.ROWS - 1;
     }
 
     // It returns true even if the point is not valid (for example if it is out of limit, because it is not the function's responsibility)
     //33 método
+    //
     isEmptyPoint(x, y) {
         if (!this.existingPieces[y]) return true;
         if (!this.existingPieces[y][x]) return true;
@@ -612,7 +636,7 @@ class Game {
         } else {
             return true;
         }
-    }
+    }//verifica la posicion de la pieza tanto en x como en y asi declara que la ficha tiene una posicion tomada para que no se superpongan
 
     /**
      * Check if a point (in the game board) is valid to put another point there.
@@ -633,6 +657,7 @@ class Game {
         }
     }
     //35 método
+    //Se evalua si cada uno de los cuadritos que conforma el tetromino pueden moverse a la derecha, si es true va a aumentar x en 1, de lo contrario, no se hace dicho movimiento si no cuenta con el espacio para ello, retorna false.
     figureCanMoveRight() {
         if (!this.currentFigure) return false;
         for (const point of this.currentFigure.getPoints()) {
@@ -644,6 +669,7 @@ class Game {
         return true;
     }
     //36 método
+    //Se evalua si cada uno de los cuadritos que conforma el tetromino pueden moverse a la izquierda, si es true va a disminuir x en 1, de lo contrario, no se hace dicho movimiento si no cuenta con el espacio para ello, retorna false.
     figureCanMoveLeft() {
         if (!this.currentFigure) return false;
         for (const point of this.currentFigure.getPoints()) {
@@ -655,6 +681,7 @@ class Game {
         return true;
     }
     //37 método
+    ////Se evalua si cada uno de los cuadritos que conforma el tetromino pueden moverse hacia abajo, si es true va a aumentar y en 1, de lo contrario, no se hace dicho movimiento si no cuenta con el espacio para ello, retorna false.
     figureCanMoveDown() {
         if (!this.currentFigure) return false;
         for (const point of this.currentFigure.getPoints()) {
@@ -666,6 +693,7 @@ class Game {
         return true;
     }
     //38 método
+    //Tiene en cuenta si la rotacion que va a hacer se hará hacia un punto válido si no es posible retorna false y no se rota.
     figureCanRotate() {
         const newPointsAfterRotate = this.currentFigure.getNextRotation();
         for (const rotatedPoint of newPointsAfterRotate) {
@@ -677,6 +705,7 @@ class Game {
     }
 
     //39 método
+    //Señala que si la figura no se puede rotar se ejecute el sonido de denied de lo contrario que se pueda rotar sin reporoducir ningun sonido adicional
     rotateFigure() {
         if (!this.figureCanRotate()) {
             this.sounds.denied.currentTime = 0;
@@ -687,6 +716,7 @@ class Game {
         this.currentFigure.incrementRotationIndex();
     }
     //40 método
+    //Crea un alert que resetea el juego. La declaración de función async define una función asíncrona, la cual devuelve un objeto AsyncFunction.
     async askUserConfirmResetGame() {
         this.pauseGame();
         const result = await Swal.fire({
