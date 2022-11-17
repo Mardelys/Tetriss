@@ -10,9 +10,9 @@ body{
     color: #fff;
 }
 main{
-        
+background-image: url(/img/tetriss.png);
+background-size:40% ;
 }
-
 ul{
     list-style: none;
 }

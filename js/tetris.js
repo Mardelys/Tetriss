@@ -3,10 +3,10 @@
 class Game { 
     // Square length in pixels
     static SQUARE_LENGTH = screen.width > 420 ? 25 : 10; //la medida del cuadrado depende del tamaño de la pantalla
-    //porejemplosi la pantalla es mayor a 420px va a ser de 30px o si no de 20
+    //porejemplosi la pantalla es mayor a 420px va a ser de 25px o si no de 10
     static COLUMNS = 12;
     static ROWS = 25;
-// por medio de este codigo se detemina el ancho y alto del tablero de tetris , teniendo en cuenta el ancho de la pantalla y el numero de filas y columnas
+    // por medio de este codigo se detemina el ancho y alto del tablero de tetris , teniendo en cuenta el ancho de la pantalla y el numero de filas y columnas
     static CANVAS_WIDTH = this.SQUARE_LENGTH * this.COLUMNS;
     static CANVAS_HEIGHT = this.SQUARE_LENGTH * this.ROWS;
     //Color del fondo del tablero
@@ -15,31 +15,24 @@ class Game {
     static BORDER_COLOR = "#b03396";
     //Color a aplicar cuando se elimina una fila completa del tablero
     static DELETED_ROW_COLOR = "#9A0680";
-    // When a piece collapses with something at its bottom, how many time wait for putting another piece? (in ms)
-    static TIMEOUT_LOCK_PUT_NEXT_PIECE = 300; // tiempo en que se demora en aparecer la otra ficha
-    // Speed of falling piece (in ms)
-    static PIECE_SPEED = 300;// velocidad en que baja la ficha entre menor sea el numero , bajara mas rapido
-    // Animation time when a row is being deleted
-    static DELETE_ROW_ANIMATION = 300; // tiempo en el que se demora una fila en desaparecer cuando  se complete
-    // Score to add when a square dissapears (for each square)
-    static PER_SQUARE_SCORE = 1; //puntaje asignado por cada cuadro que se elimmine
-    static COLORS = [ // colores de las fichas
-        "#557153",
-        "#7D8F69",
-        "#A9AF7E",
-        "#E6E5A3",
-        "#1A374D",
-        "#406882",
-        "#6998AB",
-        "#B1D0E0",
-        "#632626",
-        "#9D5353",
-        "#BF8B67",
-        "#DACC96",
-        "#1C0C5B",
-        "#3D2C8D",
-        "#916BBF",
-        "#C996CC",
+    // Tiempo en que se demora en aparecer la otra ficha establecido en microsegundos
+    static TIMEOUT_LOCK_PUT_NEXT_PIECE = 300; 
+    // Velocidad en que baja la ficha entre menor sea el numero , bajara mas rapido.
+    static PIECE_SPEED = 300;// 
+    // Tiempo en el que se demora una fila en desaparecer cuando  se complete.
+    static DELETE_ROW_ANIMATION = 300; 
+    // Puntaje asignado por cada cuadro que se elimmine
+    static PER_SQUARE_SCORE = 1; 
+    // Colores de las fichas
+    static COLORS = [ 
+        "#D35400",
+        "#F1C40F",
+        "#27AE60",
+        "#16A085",
+        "#2980B9",
+        "#7D3C98",
+        "#E74C3C",
+        "#F4D03F",
     ];
 
 
@@ -47,7 +40,7 @@ class Game {
 //min 14:46
     constructor(canvasId) {
         //variables
-        this.canvasId = canvasId;
+        this.canvasId = canvasId; 
         this.timeoutFlag = false;
         this.board = [];
         this.existingPieces = [];
@@ -60,7 +53,8 @@ class Game {
         this.intervalId = null;
         this.init();
     }
-
+    //1 método 
+    /*Este método posee en su interior 6 métodos a ejecutar facilitando en primer medida un saludo de bienvenida, inicializar los elementos del DOM(Muestra los botones del juego), reproducir el sonido del juego, resetearlo si se quiere, permitir dibujar los tetriminos y el tablero del juego, permite el uso de los controles del juego como lo son las flechas y otros botones como pausa o rotar.*/
     init() {
         this.showWelcome();
         this.initDomElements();
@@ -69,7 +63,12 @@ class Game {
         this.draw();
         this.initControls();
     }
-
+    //2 método
+    /*Posee 7 métodos en su interior junto con 3 variables con dato de tipo numérico.
+    En este método se asigna un valor de 0 al puntaje.
+    Se llama al valor de sound decretado en el constructor para que el sonido se ejecute al completar una línea o pausarlo si se desea y también para ejecutar el sonido de fondo del juego en general y pausarlo si así se desea.
+    Así mismo empiezan a aparecer las fichas en el tablero, elegir una figura aleatoria, restablece la posición inicial de las piezas en X y Y, limpia el tablero de las piezas que estaban con anterioridad, refresca el puntaje y se deja el juego en pausa para volver a iniciar.
+    */
     resetGame() {
         this.score = 0;
         this.sounds.success.currentTime = 0;
@@ -83,7 +82,8 @@ class Game {
         this.refreshScore();
         this.pauseGame();
     }
-
+    //3 método
+    /*En este método se muestra una alerta de bienvenida con las instrucciones del juego */
     showWelcome() {
         Swal.fire({
             title: '¡Bienvenido!',
@@ -99,33 +99,19 @@ class Game {
         })
     }
 
-    /* Swal.fire("¡Bienvenido!", `Tetris un juego que nunca pása de moda...¡DIVIERTETE!.
+    //4 Método
+    /*Permite añadirle un addEventListener de tipo keydown a los botones que se van a utilizar en el juego mediante el teclado, utilizando un arrow function en donde se utiliza una condicional de if junto con 5 switch cases.
 
-<br>
-<img src="/img/tetris.png">
-<style>
-img{
-    width: 430px;
-    height:170px;
-    border-radius:20px;
-    box-shadow: 5px 5px 5px 1px #82748f;
-}
-</style>
-<strong>Controles:</strong>
-<ul class="list-group"><br>
-<li class="list-group-item"> <kbd>P</kbd><br><br>Pausar o reanudar </li><br>
-<li class="list-group-item"> <kbd>R</kbd><br><br>Rotar</li><br>
-<li class="list-group-item"> <kbd>Flechas de dirección</kbd><br><br>Mover figura hacia esa dirección</li>
-<li class="list-group-item"><strong>También puedes usar los botones si estás en móvil</strong></li>
-</ul>
+    Esta condición dice que la variable decretada en el constructor con el nombre de canPlay cambia su valor a true y que se llame al parámetro code que hace referencia a las direcciones que puede seguir la tecla.
 
-`);*/
- 
+    De tal manera, indica que: Si estoy jugando y presiono la tecla a la derecha no es igual a pausar, en cambio solicita retornar lo señalado dentro del switch case respectivo por ejemplo attemptMoveRight. Este método tiene los mismos efectos utilizando las demás teclas al presionarlas. Al final se solicita ejecutar el método de syncExistingPiecesWithBoard explicado más abajo (Método 22)
+
+    Por otra parte, también se añade un addEventListener de tipo “click” el cual va a ejecutarse al clickear sobre los botones creados en pantalla mediante el HTML. De tal manera, aplica dicho evento sobre el botón identificado en el HTML con el Id respectivo, siendo llamado mediante una variable decretada en el JS dentro del método initDomElements, en donde se llama dicho botón mediante el document.querySelector. Ahora bien al darle click solicita ejecutar el método attemptMoveDown, attemptMoveRight entre otros según corresponda. Si se trata del botón de pausa o resume, solicita que se ejecute el mismo método alusivo a pauseOrResumeGame.*/
 
     initControls() {
         document.addEventListener("keydown", (e) => {
             const { code } = e;
-            if (!this.canPlay && code !== "KeyP") {
+            if (!this.canPlay && code !== "KeyP") { 
                 return;
             }
             switch (code) {
@@ -168,29 +154,39 @@ img{
             this.pauseOrResumeGame();
         }));
     }
+    //5 método
+    /*Inicialmente se decreta un método en el cual se aplica una condicional de if. En dicha condicional se llama otro método llamado figureCanMoveRight y se señala que si se cumple con lo decretado dentro de dicho método, se genere un incremento en 1 a la variable decretada en el constructor llamada globalX que inicialmente tenía valor de 0. Es entonces que la figura se moverá una casilla a la derecha.*/
 
     attemptMoveRight() {
         if (this.figureCanMoveRight()) {
             this.globalX++;
         }
     }
+    //6 método
+    /*nicialmente se decreta un método en el cual se aplica una condicional de if. En dicha condicional se llama otro método llamado figureCanMoveLeft y se señala que si se cumple con lo decretado dentro de dicho método, se genere un decremento en 1 a la variable decretada en el constructor llamada globalX que inicialmente tenía valor de 0. Es entonces que la figura se moverá una casilla a la izquierda.*/
 
     attemptMoveLeft() {
         if (this.figureCanMoveLeft()) {
             this.globalX--;
         }
     }
+    //7 método
+    /*Inicialmente se decreta un método en el cual se aplica una condicional de if. En dicha condicional se llama otro método llamado figureCanMoveDown y se señala que si se cumple con lo decretado dentro de dicho método, se genere un incremento en 1 a la variable declarada en el constructor llamada globalY que inicialmente tenía valor de 0. Es entonces que la figura se moverá una casilla hacia abajo.*/
 
     attemptMoveDown() {
         if (this.figureCanMoveDown()) {
             this.globalY++;
         }
     }
-
+    //8 método
+    /*Se decreta un método el cual solicita ejecutar el método de rotateFigure el cual será explicado más abajo (Método 39)*/
     attemptRotate() {
         this.rotateFigure();
     }
-
+    //9 método
+    /*Se declara un método con un condicional de if junto con un else. Se dice que si el juego está corriendo, el botón de iniciar se esconde y el de pausar se muestra. De lo contrario, si el juego está pausado el botón de iniciar se muestra y el de pausa se oculta. 
+    Nota: hidden = false indica que no se esconda el elemento y el hidden = true indica que si se esconda el elemento.
+    */
     pauseOrResumeGame() {
         if (this.paused) {
             this.resumeGame();
@@ -202,6 +198,8 @@ img{
             this.$btnPause.hidden = true;
         }
     }
+    //10 método
+    /*Declara un método donde se llaman 3 variables del constructor siendo que: el sonido del juego en sí se pausa, el juego también se pausa es decir se mantiene el valor de true y también se mantiene el valor de false en la variable del canPlay, para finalizar crea una función llamada clearInterval la cual llama a intervalId decretada en el constructor como parámetro. Este intervalId permite que la pieza vaya bajando pero en este caso como el juego se pausa el clearInterval limpia el intervalo para no permitir seguir bajando la pieza*/
 
     pauseGame() {
         this.sounds.background.pause();
@@ -209,6 +207,8 @@ img{
         this.canPlay = false;
         clearInterval(this.intervalId);
     }
+    //11 método
+    /*Este método declara volver a retomar el sonido, se llama el método refreshScore el cual permite seguir mostrando el puntaje que se ha acumulado durante el juego y permitir que se sigan sumando más puntos durante el progreso del juego; A las variables declaradas en el constructor se les indica que a la pausa se le cambia el valor de true a false es decir el juego deja de estar pausado y el canPlay cambia su valor de false a true para que el juego tenga continuidad. Para finalizar la variable declarada en el constructor llamada intervalidId permite que el intervalo de tiempo en términos de velocidad (uno de los static declarados al principio con el nombre de PIECE_SPEED)en la que baja la ficha se mantenga constante*/
 
     resumeGame() {
         this.sounds.background.play();
@@ -218,7 +218,8 @@ img{
         this.intervalId = setInterval(this.mainLoop.bind(this), Game.PIECE_SPEED);
     }
 
-
+    //12 método
+    /*  */ 
     moveFigurePointsToExistingPieces() {
         this.canPlay = false;
         for (const point of this.currentFigure.getPoints()) {
@@ -229,10 +230,10 @@ img{
                 color: point.color,
             }
         }
-        this.restartGlobalXAndY();
+        this.restartGlobalXAndY();// Este método dice que cuando la ficha toque el punto final del tablero o toque otra ficha, sale 
         this.canPlay = true;
     }
-
+    //13 método
     playerLoses() {
         // Check if there's something at Y 1. Maybe it is not fair for the player, but it works
         for (const point of this.existingPieces[1]) {
@@ -243,7 +244,7 @@ img{
         return false;
     }
 
-
+    //14 método 
     getPointsToDelete = () => {
         const points = [];
         let y = 0;
@@ -257,7 +258,8 @@ img{
         }
         return points;
     }
-
+    //15 método
+    // 
     changeDeletedRowColor(yCoordinates) {
         for (let y of yCoordinates) {
             for (const point of this.existingPieces[y]) {
@@ -266,25 +268,29 @@ img{
         }
     };
 
-
+    //16 método
+    //Mientras las filas se eliminan se añade los puntos al puntaje
     addScore(rows) {
         this.score += Game.PER_SQUARE_SCORE * Game.COLUMNS * rows.length;
         this.refreshScore();
     }
 
-
+    //17 método
+// Remueve las filas y las piezas exixtentes
     removeRowsFromExistingPieces(yCoordinates) {
         for (let y of yCoordinates) {
             for (const point of this.existingPieces[y]) {
                 point.color = Game.EMPTY_COLOR;
-                point.taken = false;
+                point.taken = false; // el false es para que cuando se eliminen las filas 
             }
         }
     }
 
+    //18 método
 
     verifyAndDeleteFullRows() {
         // Here be dragons
+
         const yCoordinates = this.getPointsToDelete();
         if (yCoordinates.length <= 0) return;
         this.addScore(yCoordinates);
@@ -292,6 +298,7 @@ img{
         this.sounds.success.play();
         this.changeDeletedRowColor(yCoordinates);
         this.canPlay = false;
+
         setTimeout(() => {
             this.sounds.success.pause();
             this.removeRowsFromExistingPieces(yCoordinates);
@@ -326,7 +333,7 @@ img{
             this.canPlay = true;
         }, Game.DELETE_ROW_ANIMATION);
     }
-
+    //19 método
     mainLoop() {
         if (!this.canPlay) {
             return;
@@ -378,7 +385,7 @@ img{
         this.syncExistingPiecesWithBoard();
     }
 
-
+    //20 método
     cleanGameBoardAndOverlapExistingPieces() {
         for (let y = 0; y < Game.ROWS; y++) {
             for (let x = 0; x < Game.COLUMNS; x++) {
@@ -393,7 +400,7 @@ img{
             }
         }
     }
-
+    //21 método
     overlapCurrentFigureOnGameBoard() {
         if (!this.currentFigure) return;
         for (const point of this.currentFigure.getPoints()) {
@@ -401,12 +408,12 @@ img{
         }
     }
 
-
+    //22 método
     syncExistingPiecesWithBoard() {
         this.cleanGameBoardAndOverlapExistingPieces();
         this.overlapCurrentFigureOnGameBoard();
     }
-
+    //23 método
     draw() {
         let x = 0, y = 0;
         for (const row of this.board) {
@@ -425,18 +432,18 @@ img{
             requestAnimationFrame(this.draw.bind(this));
         }, 17);
     }
-
+    //24 método
     refreshScore() {
         this.$score.textContent = `Score: ${this.score}`;
     }
-
+    //25 método
     initSounds() {
         this.sounds.background = Utils.loadSound("assets/New Donk City_ Daytime 8 Bit.mp3", true);
         this.sounds.success = Utils.loadSound("assets/success.wav");
         this.sounds.denied = Utils.loadSound("assets/denied.wav");
         this.sounds.tap = Utils.loadSound("assets/tap.wav");
     }
-
+    //26 método
     initDomElements() {
         this.$canvas = document.querySelector("#" + this.canvasId);
         this.$score = document.querySelector("#puntaje");
@@ -450,17 +457,17 @@ img{
         this.$canvas.setAttribute("height", Game.CANVAS_HEIGHT + "px");
         this.canvasContext = this.$canvas.getContext("2d");
     }
-
+    //27 método
     chooseRandomFigure() {
         this.currentFigure = this.getRandomFigure();
     }
-
+    //28 método
     restartGlobalXAndY() {
         this.globalX = Math.floor(Game.COLUMNS / 2) - 1;
         this.globalY = 0;
     }
 
-
+    //29 método
     getRandomFigure() {
         /*
         * Nombres de los tetrominós tomados de: https://www.joe.co.uk/gaming/tetris-block-names-221127
@@ -521,7 +528,7 @@ img{
                 ]);
             case 5:
                 /*
-               La Z (Cleveland Z)
+                La Z (Cleveland Z)
                **
                 **
                */
@@ -533,7 +540,7 @@ img{
             case 6:
 
                 /*
-               La otra Z (Rhode island Z)
+                La otra Z (Rhode island Z)
                 **
                **
                */
@@ -558,7 +565,8 @@ img{
                 ]);
         }
     }
-
+    //30 método
+    //Se limpia constantemete el tablero para que las piezas puedan desplazarse, verifica los espacios existente en el eje y y x, si no hay espacios disponibles el juego se acába, es decir limita el tablero
     initBoardAndExistingPieces() {
         this.board = [];
         this.existingPieces = [];
@@ -583,6 +591,8 @@ img{
      * @param point An object that has x and y properties; the coordinates shouldn't be global, but relative to the point
      * @returns {boolean}
      */
+
+    //31 método
     relativePointOutOfLimits(point) {
         const absoluteX = point.x + this.globalX;
         const absoluteY = point.y + this.globalY;
@@ -594,11 +604,14 @@ img{
      * @param absoluteY
      * @returns {boolean}
      */
+
+    //32 método
     absolutePointOutOfLimits(absoluteX, absoluteY) {
         return absoluteX < 0 || absoluteX > Game.COLUMNS - 1 || absoluteY < 0 || absoluteY > Game.ROWS - 1;
     }
 
     // It returns true even if the point is not valid (for example if it is out of limit, because it is not the function's responsibility)
+    //33 método
     isEmptyPoint(x, y) {
         if (!this.existingPieces[y]) return true;
         if (!this.existingPieces[y][x]) return true;
@@ -614,6 +627,7 @@ img{
      * @param point the point to check, with relative coordinates
      * @param points an array of points that conforms a figure
      */
+    //34 método
     isValidPoint(point, points) {
         const emptyPoint = this.isEmptyPoint(this.globalX + point.x, this.globalY + point.y);
         const hasSameCoordinateOfFigurePoint = points.findIndex(p => {
@@ -626,7 +640,7 @@ img{
             return false;
         }
     }
-
+    //35 método
     figureCanMoveRight() {
         if (!this.currentFigure) return false;
         for (const point of this.currentFigure.getPoints()) {
@@ -637,7 +651,7 @@ img{
         }
         return true;
     }
-
+    //36 método
     figureCanMoveLeft() {
         if (!this.currentFigure) return false;
         for (const point of this.currentFigure.getPoints()) {
@@ -648,7 +662,7 @@ img{
         }
         return true;
     }
-
+    //37 método
     figureCanMoveDown() {
         if (!this.currentFigure) return false;
         for (const point of this.currentFigure.getPoints()) {
@@ -659,7 +673,7 @@ img{
         }
         return true;
     }
-
+    //38 método
     figureCanRotate() {
         const newPointsAfterRotate = this.currentFigure.getNextRotation();
         for (const rotatedPoint of newPointsAfterRotate) {
@@ -670,7 +684,7 @@ img{
         return true;
     }
 
-
+    //39 método
     rotateFigure() {
         if (!this.figureCanRotate()) {
             this.sounds.denied.currentTime = 0;
@@ -680,7 +694,7 @@ img{
         this.currentFigure.points = this.currentFigure.getNextRotation();
         this.currentFigure.incrementRotationIndex();
     }
-
+    //40 método
     async askUserConfirmResetGame() {
         this.pauseGame();
         const result = await Swal.fire({
