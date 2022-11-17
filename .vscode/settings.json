@@ -1,5 +1,5 @@
 {
     "editor.minimap.size": "proportional",
     "editor.fontFamily": "'monospace', monospace",
-    "files.autoSave": "onWindowChange"
+    "files.autoSave": "off"
 }
