@@ -12,7 +12,7 @@ class Game {
     //Color del fondo del tablero
     static EMPTY_COLOR = "#ffffff";
     //Color de los bordes del tablero
-    static BORDER_COLOR = "#b03396";
+    static BORDER_COLOR = "#fff";
     //Color a aplicar cuando se elimina una fila completa del tablero
     static DELETED_ROW_COLOR = "#9A0680";
     // Tiempo en que se demora en aparecer la otra ficha establecido en microsegundos
